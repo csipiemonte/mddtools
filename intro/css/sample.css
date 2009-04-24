@@ -1,0 +1,3 @@
+
+a#mddtools-introLink img { background-image : url(graphics/sample.gif); }
+a#mddtools-introLink:hover img { background-image : url(graphics/sample_hov.gif); }
