@@ -2,16 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mddtools Plug-in
 Bundle-SymbolicName: mddtools; singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.001
 Bundle-Activator: mddtools.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.intro,
  org.eclipse.ui.intro.universal,
- guigen;bundle-version="1.0.0",
- guigen.editor;bundle-version="1.0.0",
- servicegen;bundle-version="1.0.0",
- servicegen.editor;bundle-version="1.0.0",
  mddtools.docs;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
