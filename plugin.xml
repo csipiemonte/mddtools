@@ -31,7 +31,7 @@
             id="mddtools.splashHandlers.extensible">
       </splashHandler>
       <splashHandlerProductBinding
-            productId="org.eclipse.platform.ide"
+            productId="org.eclipse.epp.package.modeling.product"
             splashId="mddtools.splashHandlers.extensible">
       </splashHandlerProductBinding>
    </extension>
