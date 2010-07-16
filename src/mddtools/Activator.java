@@ -1,13 +1,17 @@
 package mddtools;
 
+
+import mddtools.usagetracking.ProfilingPacketBuilder;
+
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.IStartup;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator extends AbstractUIPlugin {
+public class Activator extends AbstractUIPlugin implements IStartup{
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "mddtools";
@@ -26,6 +30,7 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
 	public void start(BundleContext context) throws Exception {
+		System.out.println("STARTED!!!!!!");
 		super.start(context);
 		plugin = this;
 	}
@@ -57,5 +62,15 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
+	}
+
+	public void earlyStartup() {
+		System.out.println("EARLYSTARTUP");
+		// verifica registrazione
+		String name = getDefault().getPreferenceStore().getString(ProfilingPacketBuilder.P_WHO_NAME);
+		if (name == null || name.length()==0){
+			System.out.println("REGISTRAZIONE MANCANTE: TODO!!!");
+		}
+		
 	}
 }

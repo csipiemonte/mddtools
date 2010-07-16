@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mddtools Plug-in
 Bundle-SymbolicName: mddtools; singleton:=true
-Bundle-Version: 1.0.0.008
+Bundle-Version: 1.1.0.001
 Bundle-Activator: mddtools.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -11,6 +11,11 @@ Require-Bundle: org.eclipse.ui,
  mddtools.docs;bundle-version="1.0.0",
  org.eclipse.swt,
  org.eclipse.jface,
- org.eclipse.ui.workbench
-Bundle-ActivationPolicy: lazy
+ org.eclipse.ui.workbench,
+ org.apache.commons.httpclient;bundle-version="3.1.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: mddtools,
+ mddtools.preferences,
+ mddtools.splashHandlers,
+ mddtools.usagetracking
+Bundle-ActivationPolicy: lazy

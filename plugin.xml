@@ -58,5 +58,10 @@
             tooltip="J2EE">
       </splashExtension>
    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="mddtools.Activator"></startup>
+   </extension>
 
 </plugin>
