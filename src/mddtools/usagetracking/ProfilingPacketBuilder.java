@@ -66,15 +66,21 @@ public class ProfilingPacketBuilder {
 			}
 			
 			String whoOsname = System.getProperty("os.name");
+			String whoJavaVersion = System.getProperty("java.vendor")+","+System.getProperty("java.version");
 			p.put(P_WHO_IPADDRESS, whoIpAddress);
 			p.put(P_WHO_OSNAME, whoOsname);
+			p.put(P_WHO_JAVAVERSION, whoJavaVersion);
 			
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			//e1.printStackTrace();
+			throw new IllegalStateException("Impostare le informazioni dell'utilizzatore nella "+
+					"scheda di preferenze di MDDTools (window->preferences->MDDTools)");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw new IllegalStateException("Impostare le informazioni dell'utilizzatore nella "+
+			"scheda di preferenze di MDDTools (window->preferences->MDDTools)");
 		}
 		finally{
 			if (fis != null)
