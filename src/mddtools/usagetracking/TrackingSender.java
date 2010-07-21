@@ -11,34 +11,42 @@ import org.apache.commons.httpclient.methods.PostMethod;
 
 public class TrackingSender {
 
-	public static void sendTrackingInfo(Properties info){
-		String url = getTrackingServiceURL();
-		final HttpClient client = new HttpClient();
-		final PostMethod method = new PostMethod(url);
-		Enumeration keys= info.keys();
-		while(keys.hasMoreElements()){
-			String currKey = (String)keys.nextElement();
-			String currVal = (String)info.getProperty(currKey);
-			method.addParameter(currKey, currVal);
+	public static class TrackingThread extends Thread{
+		Properties info = new Properties();
+		int code = -1;
+		public TrackingThread(Properties info){
+			super("TrackingSenderThread");
+			this.info =info;
 		}
-		method.getParams().setSoTimeout(150000);
-		Thread t = new Thread("TrackingSenderThread") {
-		  int code = -1;
-		  public void run() {
-			  while (code==-1) {
+		
+		public void run() {
+			String url = getTrackingServiceURL();
+			final HttpClient client = new HttpClient();
+			final PostMethod method = new PostMethod(url);
+			Enumeration keys = info.keys();
+			while (keys.hasMoreElements()) {
+				String currKey = (String) keys.nextElement();
+				String currVal = (String) info.getProperty(currKey);
+				method.addParameter(currKey, currVal);
+			}
+			method.getParams().setSoTimeout(150000);
+			while (code == -1) {
 				try {
-		        	code = client.executeMethod(method);	
-		        	System.out.println("Tracking response code: "+code);
+					code = client.executeMethod(method);
+					System.out.println("Tracking response code: " + code);
 				} catch (HttpException e) {
-					System.out.println("Errore invio info tracking: "+e);
+					System.out.println("Errore invio info tracking: " + e);
 					e.printStackTrace();
 				} catch (IOException e) {
-					System.out.println("Errore invio info tracking: "+e);
+					System.out.println("Errore invio info tracking: " + e);
 					e.printStackTrace();
-				}						
-	         }			  
-	      }			      
-		};
+				}
+			}
+		}
+	}
+	public static void sendTrackingInfo(Properties info){
+		
+		Thread t = new TrackingThread(info); 
 		t.start();		
 	}
 	
