@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<introContent>
+	<extensionContent id="mddtools-introExtension" style="css/sample.css"
+		name="Sample Extension" path="overview/@">
+		<group style-id="content-group" id="mddtools-introLink-group">
+
+			<link label="CSI Piemonte MDDTools" style-id="content-link"
+				id="mddtools-introLink"
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/mddtools.docs/html/overview.html">
+				<text>Strumenti per lo sviluppo secondo l'approccio Model Driven
+					Development.</text>
+			</link>
+
+		</group>
+	</extensionContent>
+</introContent>
