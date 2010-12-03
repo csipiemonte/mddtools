@@ -2,6 +2,7 @@ package mddtools.usagetracking;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.Properties;
 
@@ -30,17 +31,18 @@ public class TrackingSender {
 				method.addParameter(currKey, currVal);
 			}
 			method.getParams().setSoTimeout(150000);
-			while (code == -1) {
-				try {
-					code = client.executeMethod(method);
-					System.out.println("Tracking response code: " + code);
-				} catch (HttpException e) {
-					System.out.println("Errore invio info tracking: " + e);
-					e.printStackTrace();
-				} catch (IOException e) {
-					System.out.println("Errore invio info tracking: " + e);
-					e.printStackTrace();
-				}
+			try {
+				code = client.executeMethod(method);
+				System.out.println("Tracking response code: " + code);
+			} catch (HttpException e) {
+				System.out.println("Errore invio info tracking: " + e);
+				e.printStackTrace();
+			}catch (UnknownHostException e){
+				System.out.println("Errore rete: " + e);
+				e.printStackTrace();
+			} catch (IOException e) {
+				System.out.println("Errore invio info tracking: " + e);
+				e.printStackTrace();
 			}
 		}
 	}
