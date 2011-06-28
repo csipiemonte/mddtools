@@ -6,9 +6,10 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            name="MDDTools Preferences"
+            category="mddtools.preferences"
             class="mddtools.preferences.MDDToolsPreferencePage"
-            id="mddtools.preferences.MDDToolsPreferencePage">
+            id="mddtools.preferences.MDDToolsPreferencePage"
+            name="MDDTools Preferences">
       </page>
    </extension>
    <extension

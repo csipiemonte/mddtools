@@ -33,7 +33,7 @@ public class MDDToolsPreferencePage
 	public MDDToolsPreferencePage() {
 		super(GRID);
 		setPreferenceStore(Activator.getDefault().getPreferenceStore());
-		setDescription("A demonstration of a preference page implementation");
+		setDescription("Preferenze MDDTools");
 	}
 	
 	/**
