@@ -21,31 +21,35 @@ public class TrackingSender {
 		}
 		
 		public void run() {
-			String url = getTrackingServiceURL();
-			final HttpClient client = new HttpClient();
-			final PostMethod method = new PostMethod(url);
-			Enumeration keys = info.keys();
-			while (keys.hasMoreElements()) {
-				String currKey = (String) keys.nextElement();
-				String currVal = (String) info.getProperty(currKey);
-				method.addParameter(currKey, currVal);
-			}
-			method.getParams().setSoTimeout(150000);
-			try {
-				code = client.executeMethod(method);
-				System.out.println("Tracking response code: " + code);
-			} catch (HttpException e) {
-				System.out.println("Errore invio info tracking: " + e);
-				e.printStackTrace();
-			}catch (UnknownHostException e){
-				System.out.println("Errore rete: " + e);
-				e.printStackTrace();
-			} catch (IOException e) {
-				System.out.println("Errore invio info tracking: " + e);
-				e.printStackTrace();
+			if (isTrackingActive()) {
+				String url = getTrackingServiceURL();
+				final HttpClient client = new HttpClient();
+				final PostMethod method = new PostMethod(url);
+				Enumeration keys = info.keys();
+				while (keys.hasMoreElements()) {
+					String currKey = (String) keys.nextElement();
+					String currVal = (String) info.getProperty(currKey);
+					method.addParameter(currKey, currVal);
+				}
+				method.getParams().setSoTimeout(150000);
+				try {
+					code = client.executeMethod(method);
+					System.out.println("Tracking response code: " + code);
+				} catch (HttpException e) {
+					System.out.println("Errore invio info tracking: " + e);
+					e.printStackTrace();
+				} catch (UnknownHostException e) {
+					System.out.println("Errore rete: " + e);
+					e.printStackTrace();
+				} catch (IOException e) {
+					System.out.println("Errore invio info tracking: " + e);
+					e.printStackTrace();
+				}
 			}
 		}
 	}
+	
+	
 	public static void sendTrackingInfo(Properties info){
 		
 		Thread t = new TrackingThread(info); 
@@ -67,6 +71,28 @@ public class TrackingSender {
 		else{
 			System.out.println("Errore reperimento info tracking service");
 			return null;
+		}
+	}
+	
+	public static boolean isTrackingActive(){
+		Properties trackerProps = new Properties();
+		InputStream is = TrackingSender.class.getResourceAsStream("/mddtools/usagetracking/tracking.properties");
+		if (is != null){
+			try {
+				trackerProps.load(is);
+				String p =  trackerProps.getProperty("tracking.active");
+				if (p!=null && "true".equals(p))
+					return true;
+				else
+					return false;
+			} catch (IOException e) {
+				System.out.println("Errore lettura info tracking service");
+				return false;
+			}
+		}
+		else{
+			System.out.println("Errore reperimento info tracking service");
+			return false;
 		}
 	}
 }
