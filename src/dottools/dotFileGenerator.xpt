@@ -1,0 +1,73 @@
+«IMPORT dot»
+
+«EXTENSION dottools::dotlib»
+«EXTENSION org::eclipse::xtend::util::stdlib::io»
+«EXTENSION org::eclipse::xtend::util::stdlib::elementprops»
+
+«DEFINE main(String pathToDotExe, String outputFormat, String dotTargetDir) FOR GraphvizModel-»
+	«EXPAND dotFile FOREACH graphs»
+	«EXPAND batFile(pathToDotExe, outputFormat, dotTargetDir)»
+«ENDDEFINE»
+
+«DEFINE batFile(String pathToDotExe, String outputFormat, String dotTargetDir) FOR GraphvizModel»
+	«FILE "processdot.bat"»
+		@echo off
+	    mkdir «dotTargetDir»
+		echo Using Graphviz in path "«pathToDotExe»" 
+		«FOREACH graphs AS g»
+			echo processing «g.filename()» ...
+			"«pathToDotExe.trim()»dot.exe" -T«outputFormat» «g.filename()» -o «dotTargetDir»/«g.name».«outputFormat»
+		«ENDFOREACH»
+	«ENDFILE»
+	«FILE "processdot.sh"»
+	    mkdir -p «dotTargetDir»
+		# Please make sure that 'dot' can be found on PATH
+		«FOREACH graphs AS g»
+			echo processing «g.filename()» ...
+			«pathToDotExe.trim()»dot -T«outputFormat» «g.filename()» -o «dotTargetDir»/«g.name».«outputFormat»
+		«ENDFOREACH»
+	«ENDFILE»
+«ENDDEFINE»
+
+«DEFINE dotFile FOR MainGraph»
+	«FILE filename()-»
+	«this.getGraphType()» "«name»" {
+		«IF getProperty("fontname") != null»
+			graph [fontname="«getProperty("fontname")»"«IF !getAttributes().isEmpty», «ENDIF»«EXPAND attr_stmt FOREACH getAttributes()»];
+			node [fontname="«getProperty("fontname")»"];
+			edge [fontname="«getProperty("fontname")»"];
+		«ENDIF»
+		«EXPAND stmt FOREACH stmts SEPARATOR ";"»
+	}
+	«ENDFILE-»
+«ENDDEFINE»
+
+«DEFINE stmt FOR Stmt»«ENDDEFINE»
+
+«DEFINE stmt FOR NodeStmt»
+	"«name»" «EXPAND attr_list FOR attributes»«
+ENDDEFINE»
+
+«DEFINE stmt FOR Subgraph»
+	subgraph "cluster_«name»" {
+		«IF getProperty("label") != null»
+		    label = "«getProperty("label")»";
+		«ENDIF»
+		«EXPAND stmt FOREACH stmts SEPARATOR ";"»	
+	}	
+«ENDDEFINE»
+
+«DEFINE attr_stmt FOR AttrList» «FOREACH a_list AS a SEPARATOR ", "»«a.name»="«a.value»"«ENDFOREACH» «ENDDEFINE»
+
+«DEFINE edgeRHS FOR EdgeRhs»«ENDDEFINE» 
+
+«DEFINE attr_list FOR List[AttrList]»[ «FOREACH (List[AList])a_list AS a SEPARATOR ", "»«a.name»="«a.value»"«ENDFOREACH» ]«ENDDEFINE»
+
+«DEFINE stmt FOR EdgeStmtNode»
+	"«this.getNode_id().name»" «EXPAND edgeRHS FOREACH edgeRHS» «EXPAND attr_list FOR attributes»«
+ENDDEFINE»
+
+«DEFINE edgeRHS FOR EdgeRhsNode» -> "«getNode(this).name»" «ENDDEFINE»
+
+«DEFINE attr_stmt FOR AttrStmt»«ERROR "template attr_stmt FOR AttrStmt undefined...."»«ENDDEFINE»
+

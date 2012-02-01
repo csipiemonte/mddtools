@@ -1,0 +1,17 @@
+import dot;
+
+extension dottools::Extensions;
+extension org::eclipse::xtend::util::stdlib::io;
+/*
+ * This check file is used by the parser
+ * and by the editor. Add your constraints here!
+ */
+context MainGraph ERROR ERRMSG_REQUIREDFEATURE("name") :
+	name != null && name.trim()!="" ;
+
+context MainGraph ERROR ERRMSG_REQUIREDFEATURE("graphtype") :
+	this.getGraphType() != null;
+
+
+context Subgraph ERROR "subgraph name must be specified" :
+   name != null;
