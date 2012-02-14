@@ -53,11 +53,24 @@ public class ProfilingPacketBuilder {
 	public static final String P_GENERATE_GENPROJ_NAME = "generateGeneratorProjectName";
 	public static final String P_GENERATE_TRGPROJ_NAME = "generateTargetProjectName";
 	
+	public static final String P_DISABLE_TRACKING = "disableTracking";
+	public static final String P_ENABLE_PROXY = "enableProxy";
+	public static final String P_PROXY_HOST = "proxyHost";
+	public static final String P_PROXY_PORT = "proxyPort";
+	public static final String P_TRACKING_URL = "trackingURL";
+	
 	public static final String V_ACTION_STARTUP = "startup";
 	public static final String V_ACTION_GENERATE = "generate";
 	
 	
 	public static final String REGISTRATION_FILENAME = ".mddtools.info";
+	
+	
+	public static final String ERROR_MSG = 
+		"Per utilizzare gli MDDTools e' necessario impostare le informazioni dell'utilizzatore nella "+
+		"scheda di preferenze di MDDTools (window->preferences->MDDTools). "+
+		"Si ricorda che e' possibile disabilitare l'invio delle informazioni di tracking selezionando "+
+		"l'apposito check nella pagina di preferenze.";
 	
 	/**
 	 * who.userid=<id dell'utente fornito alla registrazione>
@@ -67,7 +80,7 @@ public class ProfilingPacketBuilder {
 	 *
 	 * @return
 	 */
-	private static Properties packCommonInfo(){
+	public static Properties packCommonInfo(){
 		System.out.println("packCommonInfo...");
 		Properties p = new Properties();
 		String homeDir = System.getProperty("user.home");
@@ -94,13 +107,11 @@ public class ProfilingPacketBuilder {
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			//e1.printStackTrace();
-			throw new IllegalStateException("Impostare le informazioni dell'utilizzatore nella "+
-					"scheda di preferenze di MDDTools (window->preferences->MDDTools)");
+			throw new IllegalStateException(ERROR_MSG);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
-			throw new IllegalStateException("Impostare le informazioni dell'utilizzatore nella "+
-			"scheda di preferenze di MDDTools (window->preferences->MDDTools)");
+			throw new IllegalStateException(ERROR_MSG);
 		}
 		finally{
 			if (fis != null)

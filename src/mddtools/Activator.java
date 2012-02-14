@@ -21,9 +21,15 @@
 package mddtools;
 
 
-import mddtools.usagetracking.ProfilingPacketBuilder;
+import java.text.MessageFormat;
 
+import mddtools.usagetracking.ProfilingPacketBuilder;
+import mddtools.usagetracking.TrackingSender;
+import mddtools.usagetracking.UsageReport;
+
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -84,13 +90,49 @@ public class Activator extends AbstractUIPlugin implements IStartup{
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 
+	
+	public static IStatus getErrorStatus(String pluginId, String message, Throwable throwable,
+			Object[] messageArguments) {
+		String formattedMessage = null;
+		if (message != null) {
+			formattedMessage = MessageFormat.format(message, messageArguments);
+		}
+		return new org.eclipse.core.runtime.Status(org.eclipse.core.runtime.Status.ERROR, pluginId, org.eclipse.core.runtime.Status.ERROR, formattedMessage,
+				throwable);
+	}
+	
+	
+	private void showWarningDialog(){
+		Display.getDefault().asyncExec(new Runnable() {
+
+			public void run() {
+				try {
+					new UsageReport().report();
+				} catch (Exception e) {
+					IStatus status = getErrorStatus(Activator.PLUGIN_ID,
+							"could not start usage reporting", e, null);
+					//LoggingUtils.log(status, SubclipseToolsUsageActivator.getDefault());
+					Activator.getDefault().getLog().log(status);
+				}
+			}
+		});
+	}
+	
 	public void earlyStartup() {
 		System.out.println("EARLYSTARTUP");
-		// verifica registrazione
-		String name = getDefault().getPreferenceStore().getString(ProfilingPacketBuilder.P_WHO_NAME);
-		if (name == null || name.length()==0){
-			System.out.println("REGISTRAZIONE MANCANTE: TODO!!!");
+		if (TrackingSender.isTrackingActive()){
+			boolean showWarningDlg = false;
+	
+			try{
+				// verifica la presenza del file ".mddtools.info"
+				ProfilingPacketBuilder.packCommonInfo();
+			}
+			catch(Exception e){
+				showWarningDlg=true;
+			}
+			// qui potrebbe essere necessario aggiungere dei controlli
+			if (showWarningDlg)
+				showWarningDialog();
 		}
-		
 	}
 }

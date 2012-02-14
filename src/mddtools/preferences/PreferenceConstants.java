@@ -41,4 +41,14 @@ public class PreferenceConstants {
 	public static final String P_EMAIL = ProfilingPacketBuilder.P_WHO_EMAIL;
 	
 	public static final String P_COMPANY = ProfilingPacketBuilder.P_WHO_COMPANY;
+	
+	public static final String P_DISABLE_TRACKING = ProfilingPacketBuilder.P_DISABLE_TRACKING;
+	
+	public static final String P_ENABLE_PROXY = ProfilingPacketBuilder.P_ENABLE_PROXY;
+	
+	public static final String P_PROXY_HOST = ProfilingPacketBuilder.P_PROXY_HOST;
+	
+	public static final String P_PROXY_PORT = ProfilingPacketBuilder.P_PROXY_PORT;
+	
+	public static final String P_TRACKING_URL = ProfilingPacketBuilder.P_TRACKING_URL;
 }
