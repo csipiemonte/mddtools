@@ -1,73 +1,73 @@
-«IMPORT dot»
+Â«IMPORT dotÂ»
 
-«EXTENSION dottools::dotlib»
-«EXTENSION org::eclipse::xtend::util::stdlib::io»
-«EXTENSION org::eclipse::xtend::util::stdlib::elementprops»
+Â«EXTENSION dottools::dotlibÂ»
+Â«EXTENSION org::eclipse::xtend::util::stdlib::ioÂ»
+Â«EXTENSION org::eclipse::xtend::util::stdlib::elementpropsÂ»
 
-«DEFINE main(String pathToDotExe, String outputFormat, String dotTargetDir) FOR GraphvizModel-»
-	«EXPAND dotFile FOREACH graphs»
-	«EXPAND batFile(pathToDotExe, outputFormat, dotTargetDir)»
-«ENDDEFINE»
+Â«DEFINE main(String pathToDotExe, String outputFormat, String dotTargetDir) FOR GraphvizModel-Â»
+	Â«EXPAND dotFile FOREACH graphsÂ»
+	Â«EXPAND batFile(pathToDotExe, outputFormat, dotTargetDir)Â»
+Â«ENDDEFINEÂ»
 
-«DEFINE batFile(String pathToDotExe, String outputFormat, String dotTargetDir) FOR GraphvizModel»
-	«FILE "processdot.bat"»
+Â«DEFINE batFile(String pathToDotExe, String outputFormat, String dotTargetDir) FOR GraphvizModelÂ»
+	Â«FILE "processdot.bat"Â»
 		@echo off
-	    mkdir «dotTargetDir»
-		echo Using Graphviz in path "«pathToDotExe»" 
-		«FOREACH graphs AS g»
-			echo processing «g.filename()» ...
-			"«pathToDotExe.trim()»dot.exe" -T«outputFormat» «g.filename()» -o «dotTargetDir»/«g.name».«outputFormat»
-		«ENDFOREACH»
-	«ENDFILE»
-	«FILE "processdot.sh"»
-	    mkdir -p «dotTargetDir»
+	    mkdir Â«dotTargetDirÂ»
+		echo Using Graphviz in path "Â«pathToDotExeÂ»" 
+		Â«FOREACH graphs AS gÂ»
+			echo processing Â«g.filename()Â» ...
+			"Â«pathToDotExe.trim()Â»dot.exe" -TÂ«outputFormatÂ» Â«g.filename()Â» -o Â«dotTargetDirÂ»/Â«g.nameÂ».Â«outputFormatÂ»
+		Â«ENDFOREACHÂ»
+	Â«ENDFILEÂ»
+	Â«FILE "processdot.sh"Â»
+	    mkdir -p Â«dotTargetDirÂ»
 		# Please make sure that 'dot' can be found on PATH
-		«FOREACH graphs AS g»
-			echo processing «g.filename()» ...
-			«pathToDotExe.trim()»dot -T«outputFormat» «g.filename()» -o «dotTargetDir»/«g.name».«outputFormat»
-		«ENDFOREACH»
-	«ENDFILE»
-«ENDDEFINE»
+		Â«FOREACH graphs AS gÂ»
+			echo processing Â»g.filename()Â» ...
+			Â«pathToDotExe.trim()Â»dot -TÂ«outputFormatÂ» Â«g.filename()Â» -o Â«dotTargetDirÂ»/Â«g.nameÂ».Â«outputFormatÂ»
+		Â«ENDFOREACHÂ»
+	Â«ENDFILEÂ»
+Â«ENDDEFINEÂ»
 
-«DEFINE dotFile FOR MainGraph»
-	«FILE filename()-»
-	«this.getGraphType()» "«name»" {
-		«IF getProperty("fontname") != null»
-			graph [fontname="«getProperty("fontname")»"«IF !getAttributes().isEmpty», «ENDIF»«EXPAND attr_stmt FOREACH getAttributes()»];
-			node [fontname="«getProperty("fontname")»"];
-			edge [fontname="«getProperty("fontname")»"];
-		«ENDIF»
-		«EXPAND stmt FOREACH stmts SEPARATOR ";"»
+Â«DEFINE dotFile FOR MainGraphÂ»
+	Â«FILE filename()-Â»
+	Â«this.getGraphType()Â» "Â«nameÂ»" {
+		Â«IF getProperty("fontname") != nullÂ»
+			graph [fontname="Â«getProperty("fontname")Â»"Â«IF !getAttributes().isEmptyÂ», Â«ENDIFÂ»Â«EXPAND attr_stmt FOREACH getAttributes()Â»];
+			node [fontname="Â«getProperty("fontname")Â»"];
+			edge [fontname="Â«getProperty("fontname")Â»"];
+		Â«ENDIFÂ»
+		Â«EXPAND stmt FOREACH stmts SEPARATOR ";"Â»
 	}
-	«ENDFILE-»
-«ENDDEFINE»
+	Â«ENDFILE-Â»
+Â«ENDDEFINEÂ»
 
-«DEFINE stmt FOR Stmt»«ENDDEFINE»
+Â«DEFINE stmt FOR StmtÂ»Â«ENDDEFINEÂ»
 
-«DEFINE stmt FOR NodeStmt»
-	"«name»" «EXPAND attr_list FOR attributes»«
-ENDDEFINE»
+Â«DEFINE stmt FOR NodeStmtÂ»
+	"Â«nameÂ»" Â«EXPAND attr_list FOR attributesÂ»Â»
+Â«ENDDEFINEÂ»
 
-«DEFINE stmt FOR Subgraph»
-	subgraph "cluster_«name»" {
-		«IF getProperty("label") != null»
-		    label = "«getProperty("label")»";
-		«ENDIF»
-		«EXPAND stmt FOREACH stmts SEPARATOR ";"»	
+Â«DEFINE stmt FOR SubgraphÂ»
+	subgraph "cluster_Â«nameÂ»" {
+		Â«IF getProperty("label") != nullÂ»
+		    label = "Â«getProperty("label")Â»";
+		Â«ENDIFÂ»
+		Â«EXPAND stmt FOREACH stmts SEPARATOR ";"Â»	
 	}	
-«ENDDEFINE»
+Â«ENDDEFINEÂ»
 
-«DEFINE attr_stmt FOR AttrList» «FOREACH a_list AS a SEPARATOR ", "»«a.name»="«a.value»"«ENDFOREACH» «ENDDEFINE»
+Â«DEFINE attr_stmt FOR AttrListÂ» Â«FOREACH a_list AS a SEPARATOR ", "Â»Â«a.nameÂ»="Â«a.valueÂ»"Â«ENDFOREACHÂ» Â«ENDDEFINEÂ»
 
-«DEFINE edgeRHS FOR EdgeRhs»«ENDDEFINE» 
+Â«DEFINE edgeRHS FOR EdgeRhsÂ»Â«ENDDEFINEÂ» 
 
-«DEFINE attr_list FOR List[AttrList]»[ «FOREACH (List[AList])a_list AS a SEPARATOR ", "»«a.name»="«a.value»"«ENDFOREACH» ]«ENDDEFINE»
+Â«DEFINE attr_list FOR List[AttrList]Â»[ Â«FOREACH (List[AList])a_list AS a SEPARATOR ", "Â»Â«a.nameÂ»="Â«a.valueÂ»"Â«ENDFOREACHÂ» ]Â«ENDDEFINEÂ»
 
-«DEFINE stmt FOR EdgeStmtNode»
-	"«this.getNode_id().name»" «EXPAND edgeRHS FOREACH edgeRHS» «EXPAND attr_list FOR attributes»«
-ENDDEFINE»
+Â«DEFINE stmt FOR EdgeStmtNodeÂ»
+	"Â«this.getNode_id().nameÂ»" Â«EXPAND edgeRHS FOREACH edgeRHSÂ» Â«EXPAND attr_list FOR attributesÂ»Â»
+Â«ENDDEFINEÂ»
 
-«DEFINE edgeRHS FOR EdgeRhsNode» -> "«getNode(this).name»" «ENDDEFINE»
+Â«DEFINE edgeRHS FOR EdgeRhsNodeÂ» -> "Â«getNode(this).nameÂ»" Â«ENDDEFINEÂ»
 
-«DEFINE attr_stmt FOR AttrStmt»«ERROR "template attr_stmt FOR AttrStmt undefined...."»«ENDDEFINE»
+Â«DEFINE attr_stmt FOR AttrStmtÂ»Â«ERROR "template attr_stmt FOR AttrStmt undefined...."Â»Â«ENDDEFINEÂ»
 
