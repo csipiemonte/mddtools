@@ -31,7 +31,7 @@
 
 «DEFINE dotFile FOR MainGraph»
 	«FILE filename()-»
-	«this.getGraphType()» "«name»" {
+	«this.type» "«name»" {
 		«IF getProperty("fontname") != null»
 			graph [fontname="«getProperty("fontname")»"«IF !getAttributes().isEmpty», «ENDIF»«EXPAND attr_stmt FOREACH getAttributes()»];
 			node [fontname="«getProperty("fontname")»"];
@@ -64,10 +64,10 @@
 «DEFINE attr_list FOR List[AttrList]»[ «FOREACH (List[AList])a_list AS a SEPARATOR ", "»«a.name»="«a.value»"«ENDFOREACH» ]«ENDDEFINE»
 
 «DEFINE stmt FOR EdgeStmtNode»
-	"«this.getNode_id().name»" «EXPAND edgeRHS FOREACH edgeRHS» «EXPAND attr_list FOR attributes»»
+«REM»	"«this.getNode_id().name»" «EXPAND edgeRHS FOREACH edgeRHS» «EXPAND attr_list FOR attributes» «ENDREM»
 «ENDDEFINE»
 
-«DEFINE edgeRHS FOR EdgeRhsNode» -> "«getNode(this).name»" «ENDDEFINE»
+«DEFINE edgeRHS FOR EdgeRhsNode» -> «REM»"«getNode(this).name»"  «ENDREM»«ENDDEFINE»
 
 «DEFINE attr_stmt FOR AttrStmt»«ERROR "template attr_stmt FOR AttrStmt undefined...."»«ENDDEFINE»
 

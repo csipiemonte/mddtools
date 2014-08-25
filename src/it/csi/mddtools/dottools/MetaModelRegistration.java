@@ -24,7 +24,8 @@ import org.eclipse.xtext.XtextPackage;
 public class MetaModelRegistration {
 	
     static {
-    	org.eclipse.zest.internal.dot.parser.DotStandaloneSetup.doSetup();
+    	org.eclipse.gef4.internal.dot.parser.DotStandaloneSetup.doSetup();
+    	//org.eclipse.zest.internal.dot.parser.DotStandaloneSetup.doSetup();
 		
 	}
 	

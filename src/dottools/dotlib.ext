@@ -43,8 +43,8 @@ create dot::EdgeStmtNode mapToEdge( Object source, Object target, Object token )
     this;
 
 create dot::EdgeRhsNode toRHS( Object o, Object source, Object token ):
-   // setOp(dot::EdgeOp::directed) ->
-    setOp("DIRECTED") ->
+   setOp(dot::EdgeOp::directed) ->
+    //setOp("DIRECTED") ->
     setNode( o.toNodeId() ) ->
     this;
 	
@@ -177,14 +177,14 @@ cached String dotId( Object o ):
 	
 
 setAttribute( dot::Subgraph graph, String name, String value ):
-	let attrStmt = (AttrStmt)(graph.stmts.selectType(AttrStmt).first) :
+	let attrStmt = (AttrStmt)(graph.stmts.typeSelect(AttrStmt)).first() :
 	if (attrStmt != null) then 
 		//graph.attributes.add( attr( graph, name, value ) ) -> graph;
 		attrStmt.attributes.add(attr(graph, name, value)) -> graph;
 
 
 List[AttrStmt] getAttributes(dot::MainGraph graph) :
-	let attrStmt = (AttrStmt)(graph.stmts.selectType(AttrStmt)) :
+	let attrStmt = (AttrStmt)(graph.stmts.typeSelect(AttrStmt)).first() :
 		attrStmt; 
 
 //setAttribute( dot::MainGraph graph, String name, String value ):

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mddtools Plug-in
 Bundle-SymbolicName: mddtools; singleton:=true
-Bundle-Version: 2.0.0.002
+Bundle-Version: 3.0.0.001
 Bundle-Activator: mddtools.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -13,13 +13,19 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface,
  org.eclipse.ui.workbench,
  org.apache.commons.httpclient;bundle-version="3.1.0",
- org.eclipse.zest.dot.core;bundle-version="2.0.0";visibility:=reexport,
  org.eclipse.xtend.util.stdlib;bundle-version="1.0.1",
  org.eclipse.xtext.activities;bundle-version="2.0.1",
  org.eclipse.xtext.builder;bundle-version="2.0.1",
  org.eclipse.xtext.common.types.shared;bundle-version="2.0.1",
  org.eclipse.xtext.ecore;bundle-version="2.0.1",
- org.eclipse.xtext.generator;bundle-version="2.0.1"
+ org.eclipse.xtext.generator;bundle-version="2.0.1",
+ org.eclipse.gef4.dot.ui;bundle-version="0.1.0",
+ org.eclipse.gef4.zest.core;bundle-version="0.1.0",
+ org.eclipse.gef4.zest.jface;bundle-version="0.1.0",
+ org.eclipse.gef4.zest.ui;bundle-version="0.1.0",
+ org.eclipse.gef4.graph;bundle-version="0.1.0",
+ org.emftools.emf2gv.graphdesc;bundle-version="1.1.0",
+ org.eclipse.gef4.dot;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: dottools,
  it.csi.mddtools.dottools,

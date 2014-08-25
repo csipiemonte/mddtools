@@ -1,6 +1,7 @@
 package it.csi.mddtools.dottools;
 
-import org.eclipse.zest.internal.dot.parser.dot.*;
+import org.eclipse.gef4.dot.*;
+import org.eclipse.gef4.internal.dot.parser.dot.*;
 
 public class MiscUtils {
 	public static GraphType getGraphType(MainGraph graph){

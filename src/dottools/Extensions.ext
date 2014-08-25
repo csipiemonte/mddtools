@@ -13,8 +13,9 @@ String ERRMSG_REQUIREDFEATURE (String feature) : feature.metaType.name + " featu
 
 
 Void setType(MainGraph gr, GraphType tp) : JAVA
-	it.csi.mddtools.dottools.MiscUtils.setGraphType(org.eclipse.zest.internal.dot.parser.dot.MainGraph, org.eclipse.zest.internal.dot.parser.dot.GraphType);
+	it.csi.mddtools.dottools.MiscUtils.setGraphType(org.eclipse.gef4.internal.dot.parser.dot.MainGraph, org.eclipse.gef4.internal.dot.parser.dot.GraphType);
 
+/*
 GraphType getGraphType(MainGraph gr) : JAVA
 	it.csi.mddtools.dottools.MiscUtils.getGraphType(org.eclipse.zest.internal.dot.parser.dot.MainGraph);
 
@@ -33,3 +34,4 @@ Void setNode_id(dot::EdgeStmtNode node, dot::NodeId nid) : JAVA
 
 NodeId getNode_id(dot::EdgeStmtNode node) : JAVA
 	it.csi.mddtools.dottools.MiscUtils.getNodeId(org.eclipse.zest.internal.dot.parser.dot.EdgeStmtNode);
+	*/
