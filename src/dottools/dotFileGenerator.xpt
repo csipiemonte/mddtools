@@ -29,7 +29,7 @@
 	«ENDFILE»
 «ENDDEFINE»
 
-«DEFINE dotFile FOR MainGraph»
+«DEFINE dotFile FOR DotGraph»
 	«FILE filename()-»
 	«this.type» "«name»" {
 		«IF getProperty("fontname") != null»
@@ -45,7 +45,7 @@
 «DEFINE stmt FOR Stmt»«ENDDEFINE»
 
 «DEFINE stmt FOR NodeStmt»
-	"«name»" «EXPAND attr_list FOR attributes»»
+	"«this.getProperty("name")»" «EXPAND attr_list FOR this.attrLists»»
 «ENDDEFINE»
 
 «DEFINE stmt FOR Subgraph»
@@ -57,11 +57,11 @@
 	}	
 «ENDDEFINE»
 
-«DEFINE attr_stmt FOR AttrList» «FOREACH a_list AS a SEPARATOR ", "»«a.name»="«a.value»"«ENDFOREACH» «ENDDEFINE»
+«DEFINE attr_stmt FOR AttrList» «FOREACH this.attributes AS a SEPARATOR ", "»«a.name»="«a.value»"«ENDFOREACH» «ENDDEFINE»
 
 «DEFINE edgeRHS FOR EdgeRhs»«ENDDEFINE» 
 
-«DEFINE attr_list FOR List[AttrList]»[ «FOREACH (List[AList])a_list AS a SEPARATOR ", "»«a.name»="«a.value»"«ENDFOREACH» ]«ENDDEFINE»
+«DEFINE attr_list FOR List[AttrList]»[ «FOREACH this AS a SEPARATOR ", "»«a.getProperty("name")»="«a.getProperty("value")»"«ENDFOREACH» ]«ENDDEFINE»
 
 «DEFINE stmt FOR EdgeStmtNode»
 «REM»	"«this.getNode_id().name»" «EXPAND edgeRHS FOREACH edgeRHS» «EXPAND attr_list FOR attributes» «ENDREM»

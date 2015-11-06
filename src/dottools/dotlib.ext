@@ -14,20 +14,20 @@ create dot::NodeStmt mapToNode( Object source, Object uniqueToken ):
 	setName( source.dotId() );	
 	
 /////////////////	
-//setType(dot::MainGraph graph, dot::GraphType tp) :
+//setType(dot::DotGraph graph, dot::GraphType tp) :
 //graph
 //;
 /////////////////
 	
-create dot::MainGraph mapToGraph( Object source ):
+create dot::DotGraph mapToGraph( Object source ):
     setType(dot::GraphType::digraph) ->
 	setFont( "arial" );
 
-create dot::MainGraph mapToGraph( Object source, Object uniqueToken ):
+create dot::DotGraph mapToGraph( Object source, Object uniqueToken ):
     setType(dot::GraphType::digraph) ->
 	setFont( "arial" );
  
-//setType(dot::MainGraph graph) :
+//setType(dot::DotGraph graph) :
 //	graph.type
 
 create dot::Subgraph mapToSubgraph( Object source ):
@@ -38,7 +38,7 @@ create dot::Subgraph mapToSubgraph( Object source, Object uniqueToken ):
 
 
 create dot::EdgeStmtNode mapToEdge( Object source, Object target, Object token ):
-    setNode_id(source.toNodeId()) ->
+    setNode(source.toNodeId()) ->
     edgeRHS.add(target.toRHS(token, source)) ->
     this;
 
@@ -49,87 +49,87 @@ create dot::EdgeRhsNode toRHS( Object o, Object source, Object token ):
     this;
 	
 
-addGraph( GraphvizModel m, MainGraph g ):
+addGraph( GraphvizModel m, DotGraph g ):
 	m.graphs.add( g ) -> m;
 
-addGraphs( GraphvizModel m, Collection[MainGraph] gc ):
+addGraphs( GraphvizModel m, Collection[DotGraph] gc ):
 	m.graphs.addAll( gc ) -> m;
 
 setArrowHead( dot::EdgeStmtNode edge, String kind ):
-	edge.attributes.add( attr( edge, "arrowhead", kind ) ) -> edge;
+	edge.attrLists.add( attr( edge, "arrowhead", kind ) ) -> edge;
 
 setArrowTail( dot::EdgeStmtNode edge, String kind ):
-	edge.attributes.add( attr( edge, "arrowtail", kind ) ) -> edge;
+	edge.attrLists.add( attr( edge, "arrowtail", kind ) ) -> edge;
 
 setStyle( dot::EdgeStmtNode edge, String kind ):
-	edge.attributes.add( attr( edge, "style", kind ) ) -> edge;
+	edge.attrLists.add( attr( edge, "style", kind ) ) -> edge;
 
 setWeight( dot::EdgeStmtNode edge, String weight ):
-	edge.attributes.add( attr( edge, "weight", weight ) ) -> edge;
+	edge.attrLists.add( attr( edge, "weight", weight ) ) -> edge;
 
 setStyle( dot::NodeStmt node, String kind ):
-	node.attributes.add( attr( node, "style", kind ) ) -> node;
+	node.attrLists.add( attr( node, "style", kind ) ) -> node;
 
 setColor( dot::EdgeStmtNode edge, String color ):
-	edge.attributes.add( attr( edge, "color", color ) ) -> 
-	edge.attributes.add( attr( edge, "fontcolor", color ) ) -> 
+	edge.attrLists.add( attr( edge, "color", color ) ) -> 
+	edge.attrLists.add( attr( edge, "fontcolor", color ) ) -> 
 	edge;
 
 setFontColor( dot::EdgeStmtNode edge, String color ):
-	edge.attributes.add( attr( edge, "fontcolor", color ) ) -> edge;
+	edge.attrLists.add( attr( edge, "fontcolor", color ) ) -> edge;
 
 setFont( dot::EdgeStmtNode edge, String font ):
-	edge.attributes.add( attr( edge, "fontname", font ) ) -> edge;
+	edge.attrLists.add( attr( edge, "fontname", font ) ) -> edge;
 
 setFont( dot::NodeStmt node, String font ):
-	node.attributes.add( attr( node, "fontname", font ) ) -> node;
+	node.attrLists.add( attr( node, "fontname", font ) ) -> node;
 
 setFontSize( dot::EdgeStmtNode edge, String font ):
-	edge.attributes.add( attr( edge, "fontsize", font ) ) -> edge;
+	edge.attrLists.add( attr( edge, "fontsize", font ) ) -> edge;
 
 setFontSize( dot::NodeStmt node, String font ):
-	node.attributes.add( attr( node, "fontsize", font ) ) -> node;
+	node.attrLists.add( attr( node, "fontsize", font ) ) -> node;
 
-setFont( dot::MainGraph g, String font ):
+setFont( dot::DotGraph g, String font ):
 	g.setProperty( "fontname", font ) -> g;
 
 mapToDirectedEdge( Object source, Object target, Object token ):
 	mapToEdge(source, target, token);
 	
 setAttribute( dot::EdgeStmtNode edge, String name, String value ):
-	edge.attributes.add( attr( edge, name, value ) ) -> edge;
+	edge.attrLists.add( attr( edge, name, value ) ) -> edge;
 	
 setAttribute( dot::NodeStmt node, String name, String value ):
-	node.attributes.add( attr( node, name, value ) ) -> node;
+	node.attrLists.add( attr( node, name, value ) ) -> node;
 
 dot::NodeId toNodeId(Object o):
 	let id = new dot::NodeId: id.setName(o.dotId()) -> id;
 
 dot::NodeId toNodeId(NodeStmt node) :
 	let id = new dot::NodeId: 
-		id.setName(node.name==null ? node.dotId() : node.name) 
+		id.setName(node.node.name==null ? node.dotId() : node.getProperty("name")) 
 	-> id;
 
 setLabel( NodeStmt n, String name ):	
-	n.attributes.add( attr( n, "label", name ) ) -> n;
+	n.attrLists.add( attr( n, "label", name ) ) -> n;
 
 setLabel( EdgeStmtNode n, String name ):	
-	n.attributes.add( attr( n, "label", name ) ) -> n;
+	n.attrLists.add( attr( n, "label", name ) ) -> n;
 	
 setHeadLabel( EdgeStmtNode n, String name ):	
-	n.attributes.add( attr( n, "headlabel", name ) ) -> n;
+	n.attrLists.add( attr( n, "headlabel", name ) ) -> n;
 	
 setTailLabel( EdgeStmtNode n, String name ):	
-	n.attributes.add( attr( n, "taillabel", name ) ) -> n;
+	n.attrLists.add( attr( n, "taillabel", name ) ) -> n;
 	
 setShape( NodeStmt n, String shape ):	
-	n.attributes.add( attr( n, "shape", shape ) ) -> n;
+	n.attrLists.add( attr( n, "shape", shape ) ) -> n;
 	
 create dot::AttrList attr( Object ctx, String name, String value ):
-	a_list.add( ctx.attrIMPL(name, value) );
+	ctx.attrIMPL(name, value) ;
  		
-create dot::AList attrIMPL( Object ctx, String name, String value ):
-	setName( name ) -> setValue( value );
+create dot::AttrList attrIMPL( Object ctx, String name, String value ):
+	attr("name",  name ) -> attr("value", value );
  
 setName( dot::NodeStmt stmt, String name ):
 	stmt.setName( name ) -> stmt;		
@@ -140,13 +140,13 @@ setName( dot::Subgraph g, String name ):
 addStatements( dot::Subgraph g, List[dot::Stmt] s ): 
 	g.stmts.addAll( s ) -> g;
  
-addStatements( dot::MainGraph g, List[dot::Stmt] s ): 
+addStatements( dot::DotGraph g, List[dot::Stmt] s ): 
 	g.stmts.addAll( s ) -> g;
  
 addStatement( dot::Subgraph g, dot::Stmt s ): 
 	g.stmts.add( s ) -> g;
  
-addStatement( dot::MainGraph g, dot::Stmt s ): 
+addStatement( dot::DotGraph g, dot::Stmt s ): 
 	g.stmts.add( s ) -> g;
  
 setLabel( dot::NodeStmt s, List[String] parts ):
@@ -160,14 +160,14 @@ setLabel( dot::NodeStmt s, List[String] parts ):
  * @return the node
  */
 setFillColor( dot::NodeStmt node, String color ):
-	node.attributes.add( attr( node, "fillcolor", color ) ) ->
-	if !node.attributes.a_list.exists(a|a.name=="style" && a.value.contains("filled")) 
+	node.attrLists.add( attr( node, "fillcolor", color ) ) ->
+	if !node.attrLists.attributes.exists(a|a.name=="style" && a.value.contains("filled")) 
 		then node.setAttribute("style", "filled")
 		->
 	node;
 	
 setLineColor( dot::NodeStmt node, String color ):
-	node.attributes.add( attr( node, "color", color ) ) -> node;
+	node.attrLists.add( attr( node, "color", color ) ) -> node;
 	
 setLabel( dot::Subgraph graph, String label ):
 	graph.setProperty( "label", label ) -> graph;
@@ -180,15 +180,15 @@ setAttribute( dot::Subgraph graph, String name, String value ):
 	let attrStmt = (AttrStmt)(graph.stmts.typeSelect(AttrStmt)).first() :
 	if (attrStmt != null) then 
 		//graph.attributes.add( attr( graph, name, value ) ) -> graph;
-		attrStmt.attributes.add(attr(graph, name, value)) -> graph;
+		attrStmt.attrLists.add(attr(graph, name, value)) -> graph;
 
 
-List[AttrStmt] getAttributes(dot::MainGraph graph) :
+List[AttrStmt] getAttributes(dot::DotGraph graph) :
 	let attrStmt = (AttrStmt)(graph.stmts.typeSelect(AttrStmt)).first() :
 		attrStmt; 
 
-//setAttribute( dot::MainGraph graph, String name, String value ):
+//setAttribute( dot::DotGraph graph, String name, String value ):
 //	graph.attributes.add( attr( graph, name, value ) ) -> graph;
 
 		
-filename( MainGraph this ): name+".dot";		
+filename( DotGraph this ): name+".dot";		

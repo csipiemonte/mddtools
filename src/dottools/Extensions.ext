@@ -12,8 +12,8 @@ extension dottools::GenExtensions reexport;
 String ERRMSG_REQUIREDFEATURE (String feature) : feature.metaType.name + " feature "+feature+" must be set";
 
 
-Void setType(MainGraph gr, GraphType tp) : JAVA
-	it.csi.mddtools.dottools.MiscUtils.setGraphType(org.eclipse.gef4.internal.dot.parser.dot.MainGraph, org.eclipse.gef4.internal.dot.parser.dot.GraphType);
+Void setType(DotGraph gr, GraphType tp) : JAVA
+	it.csi.mddtools.dottools.MiscUtils.setGraphType(org.eclipse.gef4.internal.dot.parser.dot.DotGraph, org.eclipse.gef4.internal.dot.parser.dot.GraphType);
 
 /*
 GraphType getGraphType(MainGraph gr) : JAVA
