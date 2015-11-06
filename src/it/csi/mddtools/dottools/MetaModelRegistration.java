@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+//import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 //import org.openarchitectureware.workflow.util.ResourceLoader;
 //import org.openarchitectureware.workflow.util.ResourceLoaderImpl;
 //import org.openarchitectureware.workflow.util.ResourceLoaderFactory;
@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.mwe.core.resources.ResourceLoader;
 import org.eclipse.emf.mwe.core.resources.ResourceLoaderFactory;
 import org.eclipse.emf.mwe.core.resources.ResourceLoaderImpl;
-import org.eclipse.xtext.XtextPackage;
+//import org.eclipse.xtext.XtextPackage;
 
 
 public class MetaModelRegistration {
